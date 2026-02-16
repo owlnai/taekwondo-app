@@ -66,7 +66,7 @@ export const ExamDetail = () => {
 							return (
 								<Link
 									key={tul.id}
-									to={`/tul/${tul.id}`}
+									to={`/tules/${tul.id}`}
 									className="flex items-center justify-between p-3 transition-colors bg-white border border-gray-200 rounded-lg hover:border-primary-500"
 								>
 									<div className="flex items-center gap-3">
