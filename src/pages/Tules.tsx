@@ -88,7 +88,7 @@ const TulCard = ({ tul }: { tul: Tul }) => {
       className="flex flex-col gap-4 pb-4 bg-white rounded-b-md"
     >
       <div className="relative">
-        <img src="/imgs/Rectangle.png" alt="Tul" className="w-full" />
+        <img src="/imgs/rectangle.webp" alt="Tul" className="w-full" />
       </div>
       <div className="flex flex-col px-4">
         <h2 className="text-lg font-medium">{tul.name}</h2>
