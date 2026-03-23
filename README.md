@@ -30,7 +30,7 @@
 
 Make sure you have the following installed on your system:
 
-* **Node.js** (v24 LTS)
+* **Node.js** (v20 LTS)
 * **npm**
 
 ---
