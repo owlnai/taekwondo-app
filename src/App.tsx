@@ -13,6 +13,7 @@ import { TulManagement } from './pages/TulManagement';
 import { TulVideo } from './pages/TulVideo';
 import { ExamDetail } from './pages/ExamDetail';
 import { ProgressProvider } from './context/ProgressContext';
+import { CalendarPage } from './pages/CalendarPage';
 
 function App() {
   const [isLogged, setIsLogged] = useState(() => {
@@ -44,10 +45,11 @@ function App() {
               <Route index element={<Tules />} />
               <Route path=":tulId" element={<TulManagement />} />
               <Route path=":tulId/video" element={<TulVideo />} />
-             </Route>
+            </Route>
             <Route path="/theory" element={<Theory />} />
             <Route path="/theory/study" element={<TheoryStudy />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/calendar" element={<CalendarPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
