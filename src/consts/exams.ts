@@ -63,19 +63,19 @@ export const exams: Exam[] = [
   {
     id: 'dan-1',
     range: 'I DAN',
-    belt: 'black',
+    belt: 'black_dan_1',
     type: 'dan',
   },
   {
     id: 'dan-2',
     range: 'II DAN',
-    belt: 'black',
+    belt: 'black_dan_2',
     type: 'dan',
   },
   {
     id: 'dan-3',
     range: 'III DAN',
-    belt: 'black',
+    belt: 'black_dan_3',
     type: 'dan',
   },
 ];

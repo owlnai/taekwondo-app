@@ -4,6 +4,7 @@ export type Belt = {
   alt: string;
   color: string;
   buckle?: string | null;
+  danLevel?: number | null;
 };
 
 export const belts: Belt[] = [
@@ -71,5 +72,26 @@ export const belts: Belt[] = [
     label: 'Negro',
     alt: 'Negro',
     color: '#1f1f1f',
+  },
+  {
+    id: 'black_dan_1',
+    label: 'Negro',
+    alt: 'Negro I DAN',
+    color: '#1f1f1f',
+    danLevel: 1,
+  },
+  {
+    id: 'black_dan_2',
+    label: 'Negro',
+    alt: 'Negro II DAN',
+    color: '#1f1f1f',
+    danLevel: 2,
+  },
+  {
+    id: 'black_dan_3',
+    label: 'Negro',
+    alt: 'Negro III DAN',
+    color: '#1f1f1f',
+    danLevel: 3,
   },
 ];
