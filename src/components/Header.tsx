@@ -1,5 +1,25 @@
-import { Calendar, Menu } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { ProfileButton } from './ProfileButton';
+
+const headerItems = [
+  {
+    to: '/tules',
+    label: 'Formas',
+  },
+  {
+    to: '/theory',
+    label: 'Teoría',
+  },
+  {
+    to: '/account',
+    label: 'Perfil',
+  },
+  {
+    to: '/calendar',
+    label: 'Calendario',
+  },
+];
 
 interface HeaderProps {
   onMenuToggle: () => void;
@@ -7,11 +27,12 @@ interface HeaderProps {
 
 export const Header = ({ onMenuToggle }: HeaderProps) => {
   const location = useLocation();
+  const title = headerItems.find((h) =>
+    location.pathname.startsWith(h.to)
+  )?.label;
   return (
     <header className="relative z-40 flex items-center justify-between flex-none my-4 safe-area-top">
-      <a href="/">
-        <img src="/imgs/logo.webp" width={64} alt="Logo de la escuela RAM" />
-      </a>
+      <h1 className="font-semibold">{title ?? 'Exámenes'}</h1>
 
       <div className="flex items-center gap-6">
         <NavLink
@@ -22,14 +43,7 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
         >
           <Calendar width={20} height={20} />
         </NavLink>
-        <button
-          type="button"
-          onClick={onMenuToggle}
-          className="transition-colors rounded-lg duration-2F00 active:bg-gray-100"
-          aria-label="Abrir menú"
-        >
-          <Menu width={20} height={20} />
-        </button>
+        <ProfileButton className="size-10 border-0" onClick={onMenuToggle} />
       </div>
     </header>
   );

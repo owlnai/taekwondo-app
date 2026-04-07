@@ -1,14 +1,15 @@
 import { useState, useRef } from 'react';
-import { Edit, User, Eye, EyeOff, Pencil, Check } from 'lucide-react';
+import { Edit, Eye, EyeOff, Pencil, Check } from 'lucide-react';
 import { useProgress } from '@/context/ProgressContext';
 import { belts } from '@/consts/belts';
 import { exams } from '@/consts/exams';
-import { getInitialProfileData } from '@/utils/getInitialProfileData';
 import { BeltIcon } from '@/components/BeltIcon';
+import { useAuth } from '@/context/AuthContext';
+import { ProfileButton } from '@/components/ProfileButton';
 
 export const Account = () => {
   const { currentExam, setCurrentExam } = useProgress();
-  const [profileData, setProfileData] = useState(getInitialProfileData);
+  const { profileData, setProfileData } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isEditingEmail, setIsEditingEmail] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
@@ -25,24 +26,20 @@ export const Account = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const newProfileData = {
-          ...profileData,
+        setProfileData((prev) => ({
+          ...prev,
           avatar: reader.result as string,
-        };
-        setProfileData(newProfileData);
-        localStorage.setItem('profileData', JSON.stringify(newProfileData));
+        }));
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleInputChange = (field: 'email' | 'password', value: string) => {
-    const newProfileData = {
-      ...profileData,
+    setProfileData((prev) => ({
+      ...prev,
       [field]: value,
-    };
-    setProfileData(newProfileData);
-    localStorage.setItem('profileData', JSON.stringify(newProfileData));
+    }));
   };
 
   const handleAvatarClick = () => {
@@ -71,22 +68,7 @@ export const Account = () => {
         {/* Foto de perfil y nombre */}
         <div className="flex flex-col items-center gap-3">
           <div className="relative">
-            <button
-              type="button"
-              onClick={handleAvatarClick}
-              className="relative flex items-center justify-center w-32 h-32 overflow-hidden transition-colors bg-gray-200 border-4 border-gray-200 rounded-full active:border-primary-500"
-              aria-label="Cambiar foto de perfil"
-            >
-              {profileData.avatar ? (
-                <img
-                  src={profileData.avatar}
-                  alt="Foto de perfil"
-                  className="object-cover w-full h-full"
-                />
-              ) : (
-                <User className="w-16 h-16 text-gray-400" />
-              )}
-            </button>
+            <ProfileButton className="size-32" onClick={handleAvatarClick} />
             <div className="absolute bottom-0 right-0 flex items-center justify-center w-10 h-10 border-2 border-white rounded-full bg-primary-500">
               <Edit width={16} height={16} color="#ffffff" />
             </div>

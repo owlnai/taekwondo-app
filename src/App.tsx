@@ -14,6 +14,7 @@ import { TulVideo } from './pages/TulVideo';
 import { ExamDetail } from './pages/ExamDetail';
 import { ProgressProvider } from './context/ProgressContext';
 import { CalendarPage } from './pages/CalendarPage';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   const [isLogged, setIsLogged] = useState(() => {
@@ -35,25 +36,27 @@ function App() {
   };
 
   const appContent = isLogged ? (
-    <ProgressProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<MainLayout onLogout={handleLogout} />}>
-            <Route path="/" element={<Exams />} />
-            <Route path="/exam/:examId" element={<ExamDetail />} />
-            <Route path="/tules">
-              <Route index element={<Tules />} />
-              <Route path=":tulId" element={<TulManagement />} />
-              <Route path=":tulId/video" element={<TulVideo />} />
+    <AuthProvider>
+      <ProgressProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<MainLayout onLogout={handleLogout} />}>
+              <Route path="/" element={<Exams />} />
+              <Route path="/exam/:examId" element={<ExamDetail />} />
+              <Route path="/tules">
+                <Route index element={<Tules />} />
+                <Route path=":tulId" element={<TulManagement />} />
+                <Route path=":tulId/video" element={<TulVideo />} />
+              </Route>
+              <Route path="/theory" element={<Theory />} />
+              <Route path="/theory/study" element={<TheoryStudy />} />
+              <Route path="/account" element={<Account />} />
+              <Route path="/calendar" element={<CalendarPage />} />
             </Route>
-            <Route path="/theory" element={<Theory />} />
-            <Route path="/theory/study" element={<TheoryStudy />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/calendar" element={<CalendarPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </ProgressProvider>
+          </Routes>
+        </BrowserRouter>
+      </ProgressProvider>
+    </AuthProvider>
   ) : (
     <Login onLoginSuccess={handleLoginSuccess} />
   );
