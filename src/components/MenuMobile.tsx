@@ -62,7 +62,7 @@ export const MenuMobile = ({ isOpen, onClose, onLogout }: MenuMobileProps) => {
         </button>
       </header>
 
-      <nav className="flex flex-col py-6 overflow-y-auto">
+      <nav className="flex flex-col py-6 overflow-y-auto flex-1">
         {navItems.map((item, index) => {
           const isActive =
             item.to === '/'
@@ -91,7 +91,7 @@ export const MenuMobile = ({ isOpen, onClose, onLogout }: MenuMobileProps) => {
         })}
       </nav>
 
-      <div className="flex-end px-6 pt-4 pb-6 border-t border-gray-200 relative top-[48%] w-full">
+      <div className="px-6 pt-4 pb-6 border-t border-gray-200">
         <Button onClick={onLogout}>Cerrar sesión</Button>
       </div>
     </div>

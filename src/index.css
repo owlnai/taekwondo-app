@@ -90,13 +90,25 @@
   }
 }
 
-@layer utilities {
-  /* Safe area insets para móviles (iOS notch y home indicator) */
-  .safe-area-top {
-    padding-top: env(safe-area-inset-top);
-  }
+/* Safe area insets para móviles (iOS notch y home indicator) */
+@utility safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
 
-  .safe-area-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+@utility safe-area-top-* {
+  padding-top: calc(
+    (var(--spacing) * --value(integer)) + env(safe-area-inset-top)
+  );
+  padding-top: calc(--value([length]) + env(safe-area-inset-top));
+}
+
+@utility safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@utility safe-area-bottom-* {
+  padding-bottom: calc(
+    (var(--spacing) * --value(integer)) + env(safe-area-inset-bottom)
+  );
+  padding-bottom: calc(--value([length]) + env(safe-area-inset-bottom));
 }
