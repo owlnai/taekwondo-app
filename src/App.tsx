@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Exams } from './pages/Exams';
 import { Login } from './pages/Login';
 import { Tules } from './pages/Tules';
 import { Theory } from './pages/Theory';
 import { TheoryStudy } from './pages/TheoryStudy';
-import { Account } from './pages/Account';
+import { Account, AccountEdit, AccountMenu } from './pages/Account';
 import { MainLayout } from './pages/MainLayout';
 import { InstallPWA } from './components/InstallPWA';
 import { TulManagement } from './pages/TulManagement';
@@ -36,11 +35,11 @@ function App() {
   };
 
   const appContent = isLogged ? (
-    <AuthProvider>
+    <AuthProvider onLogout={handleLogout}>
       <ProgressProvider>
         <BrowserRouter>
           <Routes>
-            <Route element={<MainLayout onLogout={handleLogout} />}>
+            <Route element={<MainLayout />}>
               <Route path="/" element={<Exams />} />
               <Route path="/exam/:examId" element={<ExamDetail />} />
               <Route path="/tules">
@@ -50,7 +49,10 @@ function App() {
               </Route>
               <Route path="/theory" element={<Theory />} />
               <Route path="/theory/study" element={<TheoryStudy />} />
-              <Route path="/account" element={<Account />} />
+              <Route path="/account" element={<Account />}>
+                <Route index element={<AccountMenu />} />
+                <Route path="edit" element={<AccountEdit />} />
+              </Route>
               <Route path="/calendar" element={<CalendarPage />} />
             </Route>
           </Routes>

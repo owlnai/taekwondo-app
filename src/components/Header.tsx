@@ -1,6 +1,6 @@
 import { Calendar } from 'lucide-react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { ProfileButton } from './ProfileButton';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { ProfileAvatar } from './ProfileAvatar';
 
 const headerItems = [
   {
@@ -21,11 +21,7 @@ const headerItems = [
   },
 ];
 
-interface HeaderProps {
-  onMenuToggle: () => void;
-}
-
-export const Header = ({ onMenuToggle }: HeaderProps) => {
+export function Header() {
   const location = useLocation();
   const title = headerItems.find((h) =>
     location.pathname.startsWith(h.to)
@@ -43,8 +39,10 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
         >
           <Calendar width={20} height={20} />
         </NavLink>
-        <ProfileButton className="size-10 border-0" onClick={onMenuToggle} />
+        <Link to="/account">
+          <ProfileAvatar className="size-10" />
+        </Link>
       </div>
     </header>
   );
-};
+}

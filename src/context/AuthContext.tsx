@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   createContext,
   useContext,
@@ -25,6 +26,7 @@ const DEFAULT_PROFILE_DATA: Profile = {
 type AuthContextType = {
   profileData: Profile;
   setProfileData: React.Dispatch<React.SetStateAction<Profile>>;
+  logout: () => void;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -39,9 +41,10 @@ export const useAuth = () => {
 
 type AuthProviderProps = {
   children: ReactNode;
+  onLogout: () => void;
 };
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
+export const AuthProvider = ({ children, onLogout }: AuthProviderProps) => {
   const [profileData, setProfileData] = useState<Profile>(() => {
     const saved = localStorage.getItem('profileData');
     return saved ? JSON.parse(saved) : DEFAULT_PROFILE_DATA;
@@ -56,6 +59,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       value={{
         profileData,
         setProfileData,
+        logout: onLogout,
       }}
     >
       {children}

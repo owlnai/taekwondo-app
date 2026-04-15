@@ -2,6 +2,7 @@ import { Book, Paperclip, User, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '../common/Button';
 import TulesIcon from '@/assets/tules.svg?react';
+import { useAuth } from '@/context/AuthContext';
 
 type NavItem = {
   to: string;
@@ -12,10 +13,10 @@ type NavItem = {
 type MenuMobileProps = {
   isOpen: boolean;
   onClose: () => void;
-  onLogout: () => void;
 };
 
-export const MenuMobile = ({ isOpen, onClose, onLogout }: MenuMobileProps) => {
+export const MenuMobile = ({ isOpen, onClose }: MenuMobileProps) => {
+  const { logout } = useAuth();
   const location = useLocation();
 
   const navItems: NavItem[] = [
@@ -92,7 +93,7 @@ export const MenuMobile = ({ isOpen, onClose, onLogout }: MenuMobileProps) => {
       </nav>
 
       <div className="px-6 pt-4 pb-6 border-t border-gray-200">
-        <Button onClick={onLogout}>Cerrar sesión</Button>
+        <Button onClick={logout}>Cerrar sesión</Button>
       </div>
     </div>
   );
