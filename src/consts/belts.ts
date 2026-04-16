@@ -9,7 +9,7 @@ export type Belt = {
 
 export const belts: Belt[] = [
   {
-    id: 'white_yellow',
+    id: 'white-yellow',
     label: 'P. Amarilla',
     alt: 'Blanco con punta Amarilla',
     color: '#fff',
@@ -22,7 +22,7 @@ export const belts: Belt[] = [
     color: '#ffe976',
   },
   {
-    id: 'yellow_green',
+    id: 'yellow-green',
     label: 'P. Verde',
     alt: 'Amarillo con punta Verde',
     color: '#ffe976',
@@ -35,7 +35,7 @@ export const belts: Belt[] = [
     color: '#387729',
   },
   {
-    id: 'green_blue',
+    id: 'green-blue',
     label: 'P. Azul',
     alt: 'Verde con punta Azul',
     color: '#387729',
@@ -48,7 +48,7 @@ export const belts: Belt[] = [
     color: '#1a4db5',
   },
   {
-    id: 'blue_red',
+    id: 'blue-red',
     label: 'P. Roja',
     alt: 'Azul con punta Roja',
     color: '#1a4db5',
@@ -61,7 +61,7 @@ export const belts: Belt[] = [
     color: '#df000a',
   },
   {
-    id: 'red_black',
+    id: 'red-black',
     label: 'P. Negra',
     alt: 'Rojo con punta Negra',
     color: '#df000a',
@@ -74,21 +74,21 @@ export const belts: Belt[] = [
     color: '#1f1f1f',
   },
   {
-    id: 'black_dan_1',
+    id: 'black-dan-1',
     label: 'Negro',
     alt: 'Negro I DAN',
     color: '#1f1f1f',
     danLevel: 1,
   },
   {
-    id: 'black_dan_2',
+    id: 'black-dan-2',
     label: 'Negro',
     alt: 'Negro II DAN',
     color: '#1f1f1f',
     danLevel: 2,
   },
   {
-    id: 'black_dan_3',
+    id: 'black-dan-3',
     label: 'Negro',
     alt: 'Negro III DAN',
     color: '#1f1f1f',

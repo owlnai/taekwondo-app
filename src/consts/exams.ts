@@ -9,7 +9,7 @@ export const exams: Exam[] = [
   {
     id: 'gup-9',
     range: '9º GUP',
-    belt: 'white_yellow',
+    belt: 'white-yellow',
     type: 'gup',
   },
   {
@@ -21,7 +21,7 @@ export const exams: Exam[] = [
   {
     id: 'gup-7',
     range: '7º GUP',
-    belt: 'yellow_green',
+    belt: 'yellow-green',
     type: 'gup',
   },
   {
@@ -33,7 +33,7 @@ export const exams: Exam[] = [
   {
     id: 'gup-5',
     range: '5º GUP',
-    belt: 'green_blue',
+    belt: 'green-blue',
     type: 'gup',
   },
   {
@@ -45,7 +45,7 @@ export const exams: Exam[] = [
   {
     id: 'gup-3',
     range: '3º GUP',
-    belt: 'blue_red',
+    belt: 'blue-red',
     type: 'gup',
   },
   {
@@ -57,25 +57,25 @@ export const exams: Exam[] = [
   {
     id: 'gup-1',
     range: '1º GUP',
-    belt: 'red_black',
+    belt: 'red-black',
     type: 'gup',
   },
   {
     id: 'dan-1',
     range: 'I DAN',
-    belt: 'black_dan_1',
+    belt: 'black-dan-1',
     type: 'dan',
   },
   {
     id: 'dan-2',
     range: 'II DAN',
-    belt: 'black_dan_2',
+    belt: 'black-dan-2',
     type: 'dan',
   },
   {
     id: 'dan-3',
     range: 'III DAN',
-    belt: 'black_dan_3',
+    belt: 'black-dan-3',
     type: 'dan',
   },
 ];
