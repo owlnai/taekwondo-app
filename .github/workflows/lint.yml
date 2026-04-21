@@ -10,13 +10,22 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: 20
-          cache: npm
+          version: 10
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'pnpm'
 
-      - run: npm ci
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
 
-      - run: npm run lint
+      - name: Run Lint
+        run: pnpm run lint
