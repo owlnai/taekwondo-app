@@ -1,4 +1,4 @@
-/* eslint-disable react-refresh/only-export-components */
+/* oxlint-disable react-refresh/only-export-components */
 import { cn } from '@/utils/cn';
 
 export const variantClass = {
