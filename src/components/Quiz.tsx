@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ArrowLeft, Check, X, RotateCcw } from 'lucide-react';
 import type { VocabularyItem } from '../consts/vocabulary';
 
@@ -22,11 +22,7 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [answered, setAnswered] = useState(false);
 
-  useEffect(() => {
-    generateQuestions();
-  }, [items]);
-
-  const generateQuestions = () => {
+  const generateQuestions = useCallback(() => {
     const shuffled = [...items].sort(() => Math.random() - 0.5).slice(0, 10);
     const newQuestions: QuizQuestion[] = shuffled.map((item) => {
       // Crear opciones incorrectas
@@ -53,7 +49,11 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
     setShowResult(false);
     setSelectedAnswer(null);
     setAnswered(false);
-  };
+  }, [items]);
+
+  useEffect(() => {
+    generateQuestions();
+  }, [generateQuestions]);
 
   const handleAnswer = (answer: string) => {
     if (answered) return;

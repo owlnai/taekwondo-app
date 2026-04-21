@@ -1,24 +1,24 @@
 {
   "oxc.lint.enable": true,
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "nicolo-ribaudo.oxc",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "[typescript]": {
-    "editor.defaultFormatter": "nicolo-ribaudo.oxc"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "nicolo-ribaudo.oxc"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "nicolo-ribaudo.oxc"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "nicolo-ribaudo.oxc"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[json]": {
-    "editor.defaultFormatter": "nicolo-ribaudo.oxc"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "nicolo-ribaudo.oxc"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "files.associations": {
     "*.css": "tailwindcss"

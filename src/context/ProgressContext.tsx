@@ -24,6 +24,7 @@ type ProgressContextType = {
 
 const ProgressContext = createContext<ProgressContextType | null>(null);
 
+// eslint-disable-next-line react/only-export-components
 export const useProgress = () => {
   const context = useContext(ProgressContext);
   if (!context) {

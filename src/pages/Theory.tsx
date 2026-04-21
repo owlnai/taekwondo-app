@@ -27,6 +27,7 @@ export const Theory = () => {
           const belt = belts.find((b) => b.id === block.beltRange);
           return (
             <Link
+              key={block.id}
               to={`/theory/block/${block.id}`}
               className="relative overflow-hidden flex flex-col justify-end gap-2 p-4 bg-white rounded-lg shadow-[0_4px_2px_1px_#cecaca4d] min-h-48"
             >
