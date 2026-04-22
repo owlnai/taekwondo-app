@@ -39,6 +39,7 @@ export const BottomNav = () => {
           <li key={item.to} className="flex-1">
             <Link
               to={item.to}
+              viewTransition={false}
               activeOptions={{
                 includeHash: false,
               }}
