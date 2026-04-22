@@ -1,4 +1,4 @@
-import type { BeforeInstallPromptEvent } from '../consts/install';
+import type { BeforeInstallPromptEvent } from '@/consts/install';
 
 import { useEffect, useMemo, useState } from 'react';
 

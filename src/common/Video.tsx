@@ -30,7 +30,7 @@ import {
 } from 'lucide-react';
 import { Button } from './Button';
 import { tuls, type Tul } from '@/consts/tuls';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import { cn } from '@/utils/cn';
 import {
   Drawer,
@@ -405,7 +405,10 @@ function GoToTulButton({
       type: MediaActionTypes.MEDIA_SEEK_REQUEST,
       detail: 0,
     });
-    navigate(`/tules/${tuls[newTulIndex].id}/video`);
+    navigate({
+      to: '/tules/$tulId/video',
+      params: { tulId: tuls[newTulIndex].id },
+    });
   }, [direction, dispatch, navigate, tul.id]);
 
   return (

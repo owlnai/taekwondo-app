@@ -1,5 +1,5 @@
-import { theoryBlocks } from '../consts/theoryContent';
-import { useParams } from 'react-router-dom';
+import { theoryBlocks } from '@/consts/theoryContent';
+import { Route } from '@/routes/_auth/theory/block.$id';
 
 const renderContent = (content: string) => {
   return content.split('\n').map((paragraph, idx) => {
@@ -30,7 +30,7 @@ const renderContent = (content: string) => {
 };
 
 export const TheoryBlock = () => {
-  const params = useParams();
+  const params = Route.useParams();
   const block = theoryBlocks.find((b) => b.id === params.id);
 
   return block ? (

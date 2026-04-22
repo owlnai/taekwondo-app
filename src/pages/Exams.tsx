@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
 import { ChevronRight, GraduationCap } from 'lucide-react';
-import { type Exam, exams } from '../consts/exams';
+import { type Exam, exams } from '@/consts/exams';
 import { belts } from '@/consts/belts';
 import { BeltIcon } from '@/components/BeltIcon';
 import { useProgress } from '@/context/ProgressContext';
@@ -52,7 +52,8 @@ function CurrentExam() {
 
   return (
     <Link
-      to={`/exam/${exam?.id}`}
+      to="/exams/$examId"
+      params={{ examId: exam?.id ?? '' }}
       className="bg-[#2D2D2D] text-white flex rounded-xl shadow-[0_6px_0_#000] h-20"
     >
       <div className="flex flex-col justify-center px-4 flex-1">
@@ -77,7 +78,8 @@ function ExamCard({
 
   return (
     <Link
-      to={`/exam/${exam.id}`}
+      to="/exams/$examId"
+      params={{ examId: exam.id }}
       className={cn(
         'flex items-center gap-3 py-3',
         isActive && 'bg-white rounded-full shadow-[0_4px_0_#cdc9c9] px-5'

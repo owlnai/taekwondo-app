@@ -1,9 +1,10 @@
-import { Button } from '../common/Button';
-import { tuls } from '../consts/tuls';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from '@/common/Button';
+import { tuls } from '@/consts/tuls';
+import { Route } from '@/routes/_auth/tules/$tulId';
+import { useNavigate } from '@tanstack/react-router';
 
 export const TulManagement = () => {
-  const params = useParams();
+  const params = Route.useParams();
   const navigate = useNavigate();
 
   const selectedTul = tuls.find((tul) => tul.id === params.tulId);
@@ -35,7 +36,10 @@ export const TulManagement = () => {
       </div>
       <Button
         onClick={() => {
-          navigate(`/tules/${params.tulId}/video`);
+          navigate({
+            to: '/tules/$tulId/video',
+            params: { tulId: params.tulId },
+          });
         }}
       >
         Ver forma

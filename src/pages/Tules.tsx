@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { tuls, type Tul } from '../consts/tuls';
+import { Link } from '@tanstack/react-router';
+import { tuls, type Tul } from '@/consts/tuls';
 import { Search, X } from 'lucide-react';
 
 export const Tules = () => {
@@ -87,7 +87,8 @@ export const Tules = () => {
 const TulCard = ({ tul }: { tul: Tul }) => {
   return (
     <Link
-      to={`/tules/${tul.id}`}
+      to="/tules/$tulId"
+      params={{ tulId: tul.id }}
       className="flex flex-col gap-4 pb-4 bg-white rounded-b-md"
     >
       <div className="relative">

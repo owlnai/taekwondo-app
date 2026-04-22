@@ -1,6 +1,6 @@
 import { Book, Paperclip, User, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
-import { Button } from '../common/Button';
+import { Link, useLocation } from '@tanstack/react-router';
+import { Button } from '@/common/Button';
 import TulesIcon from '@/assets/tules.svg?react';
 import { useAuth } from '@/context/AuthContext';
 

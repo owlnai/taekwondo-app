@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { useInstallPrerequisites } from '../hooks/useInstallPrerequisites';
-import { useDeferredInstallPrompt } from '../hooks/useDeferredInstallPrompt';
+import { useInstallPrerequisites } from '@/hooks/useInstallPrerequisites';
+import { useDeferredInstallPrompt } from '@/hooks/useDeferredInstallPrompt';
 
 const SHOW_DELAY_MS = 1500;
 

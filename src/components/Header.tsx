@@ -1,9 +1,13 @@
 import { ArrowLeft, Calendar } from 'lucide-react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useRouter } from '@tanstack/react-router';
 import { ProfileAvatar } from './ProfileAvatar';
 import { Button } from '@/common/Button';
 
 const headerItems = [
+  {
+    to: '/exams',
+    label: 'Exámenes',
+  },
   {
     to: '/tules',
     label: 'Formas',
@@ -23,12 +27,12 @@ const headerItems = [
 ];
 
 function BackButton(props: React.ComponentProps<typeof Button>) {
-  const navigate = useNavigate();
+  const router = useRouter();
   return (
     <Button
       variant="ghost"
       size="icon-sm"
-      onClick={() => navigate(-1)}
+      onClick={() => router.history.back()}
       {...props}
     >
       <ArrowLeft size={16} />
@@ -37,14 +41,16 @@ function BackButton(props: React.ComponentProps<typeof Button>) {
 }
 
 export function Header() {
-  const location = useLocation();
+  const { pathname } = useLocation();
+  const realPathname = pathname.lastIndexOf('/')
+    ? pathname.slice(0, -1)
+    : pathname;
   const title =
-    headerItems.find((h) => location.pathname.startsWith(h.to))?.label ??
-    'Exámenes';
+    headerItems.find((h) => realPathname.startsWith(h.to))?.label ?? 'Exámenes';
   const isSubRoute =
-    location.pathname === '/'
+    realPathname === '/'
       ? false
-      : headerItems.every((h) => location.pathname !== h.to);
+      : headerItems.every((h) => realPathname !== h.to);
 
   return (
     <header className="relative z-40 flex items-center justify-between flex-none my-4 safe-area-top">
@@ -54,14 +60,13 @@ export function Header() {
       </div>
 
       <div className="flex items-center gap-6">
-        <NavLink
+        <Link
           to="/calendar"
           aria-label="Calendario"
-          aria-current={location.pathname === '/calendar' ? 'page' : undefined}
-          className="[.active]:text-primary-500"
+          className="[&.active]:text-primary-500"
         >
           <Calendar width={20} height={20} />
-        </NavLink>
+        </Link>
         <Link to="/account">
           <ProfileAvatar className="size-10" />
         </Link>

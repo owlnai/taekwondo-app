@@ -1,6 +1,6 @@
-import { Outlet } from 'react-router-dom';
-import { Header } from '../components/Header';
-import { BottomNav } from '../components/BottomNav';
+import { Outlet } from '@tanstack/react-router';
+import { Header } from '@/components/Header';
+import { BottomNav } from '@/components/BottomNav';
 
 export function MainLayout() {
   return (
