@@ -3,7 +3,7 @@ import {
   theoryBlocks,
   beltFilters,
   type BeltRange,
-} from '../consts/theoryContent';
+} from '@/consts/theoryContent';
 
 export const TheoryStudy = () => {
   const [selectedFilter, setSelectedFilter] = useState<BeltRange>('all');

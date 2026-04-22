@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
 import { ArrowRight, Play } from 'lucide-react';
 import {
   vocabulary,
   categoryLabels,
   categoryIcons,
   type VocabularyCategory,
-} from '../consts/vocabulary';
-import { Quiz } from '../components/Quiz';
+} from '@/consts/vocabulary';
+import { Quiz } from '@/components/Quiz';
 import { theoryBlocks } from '@/consts/theoryContent';
 import KoreanBlock from '@/assets/korean-block.svg?react';
 import { belts } from '@/consts/belts';
@@ -28,7 +28,8 @@ export const Theory = () => {
           return (
             <Link
               key={block.id}
-              to={`/theory/block/${block.id}`}
+              to="/theory/block/$id"
+              params={{ id: block.id }}
               className="relative overflow-hidden flex flex-col justify-end gap-2 p-4 bg-white rounded-lg shadow-[0_4px_2px_1px_#cecaca4d] min-h-48"
             >
               {belt && (

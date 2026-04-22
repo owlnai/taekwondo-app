@@ -1,10 +1,11 @@
-import { useParams, Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
 import { BookOpen, Dumbbell } from 'lucide-react';
-import { exams } from '../consts/exams';
-import { tuls } from '../consts/tuls';
-import { useProgress } from '../context/ProgressContext';
+import { exams } from '@/consts/exams';
+import { tuls } from '@/consts/tuls';
+import { useProgress } from '@/context/ProgressContext';
 import { BeltIcon } from '@/components/BeltIcon';
 import { belts } from '@/consts/belts';
+import { Route } from '@/routes/_auth/exams/$examId';
 
 // Mapeo de qué tules corresponden a cada examen
 const examTuls: Record<string, string[]> = {
@@ -23,7 +24,7 @@ const examTuls: Record<string, string[]> = {
 };
 
 export const ExamDetail = () => {
-  const { examId } = useParams<{ examId: string }>();
+  const { examId } = Route.useParams();
   const { getTulStatus } = useProgress();
 
   const exam = exams.find((e) => e.id === examId);
@@ -71,7 +72,8 @@ export const ExamDetail = () => {
               return (
                 <Link
                   key={tul.id}
-                  to={`/tules/${tul.id}`}
+                  to="/tules/$tulId"
+                  params={{ tulId: tul.id }}
                   className="flex items-center justify-between p-3 transition-colors bg-white border border-gray-200 rounded-lg hover:border-primary-500"
                 >
                   <div className="flex items-center gap-3">

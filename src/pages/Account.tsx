@@ -17,7 +17,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/common/Drawer';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useRouter } from '@tanstack/react-router';
 import {
   Select,
   SelectContent,
@@ -36,7 +36,7 @@ export function AccountMenu() {
       <Button
         variant="outline"
         className="text-black"
-        onClick={() => navigate('/account/edit')}
+        onClick={() => navigate({ to: '/account/edit' })}
       >
         Editar perfil
       </Button>
@@ -46,7 +46,7 @@ export function AccountMenu() {
 }
 
 export function AccountEdit() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { profileData, setProfileData } = useAuth();
   const [profile, setProfile] = useState<Profile>(profileData);
   const [showPassword, setShowPassword] = useState(false);
@@ -63,7 +63,7 @@ export function AccountEdit() {
 
   const handleSave = () => {
     setProfileData(profile);
-    navigate(-1);
+    router.history.back();
   };
 
   return (
@@ -127,7 +127,7 @@ export function AccountEdit() {
         <Button
           variant="outline"
           className="flex-1 text-black"
-          onClick={() => navigate(-1)}
+          onClick={() => router.history.back()}
         >
           Cancelar
         </Button>

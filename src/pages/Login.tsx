@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Button } from '../common/Button';
-import { isValidEmail } from '../utils/isValidEmail';
+import { Button } from '@/common/Button';
+import { isValidEmail } from '@/utils/isValidEmail';
 import { Eye, EyeOff } from 'lucide-react';
 
 type LoginProps = {
