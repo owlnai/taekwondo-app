@@ -92,7 +92,11 @@ const TulCard = ({ tul }: { tul: Tul }) => {
       className="flex flex-col gap-4 pb-4 bg-white rounded-b-md"
     >
       <div className="relative">
-        <img src="/imgs/Rectangle.png" alt="Tul" className="w-full" />
+        <img
+          src="/imgs/Rectangle.png"
+          alt="Tul"
+          className="w-full aspect-4/3 object-cover"
+        />
         {tul.isPreTul && (
           <span className="absolute px-2 py-0.5 text-xs font-medium text-white rounded bg-amber-500 top-2 right-2">
             Pre-Tul

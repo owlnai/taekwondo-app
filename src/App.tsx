@@ -3,10 +3,12 @@ import { routeTree } from './routeTree.gen';
 import { AuthProvider } from './context/AuthContext';
 import { ProgressProvider } from './context/ProgressContext';
 import { InstallPWA } from './components/InstallPWA';
+import { LoadingPage } from './components/LoadingPage';
 
 const router = createRouter({
   routeTree,
   scrollRestoration: true,
+  defaultPendingComponent: LoadingPage,
 });
 
 declare module '@tanstack/react-router' {

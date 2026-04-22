@@ -32,7 +32,11 @@ export const TulManagement = () => {
 
       <div className="flex flex-col gap-2">
         <p className="text-xl font-semibold">Diagrama</p>
-        <img src={selectedTul.diagram} alt="Diagrama del tul" />
+        <img
+          src={selectedTul.diagram}
+          alt="Diagrama del tul"
+          className="aspect-square w-full object-contain bg-white rounded-md"
+        />
       </div>
       <Button
         onClick={() => {
