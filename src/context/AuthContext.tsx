@@ -3,8 +3,9 @@ import {
   createContext,
   useContext,
   useState,
-  useEffect,
+  type Dispatch,
   type ReactNode,
+  type SetStateAction,
 } from 'react';
 
 export type Profile = {
@@ -25,7 +26,7 @@ const DEFAULT_PROFILE_DATA: Profile = {
 
 type AuthContextType = {
   profileData: Profile;
-  setProfileData: React.Dispatch<React.SetStateAction<Profile>>;
+  setProfileData: Dispatch<SetStateAction<Profile>>;
   logout: () => void;
 };
 
@@ -45,14 +46,23 @@ type AuthProviderProps = {
 };
 
 export const AuthProvider = ({ children, onLogout }: AuthProviderProps) => {
-  const [profileData, setProfileData] = useState<Profile>(() => {
+  const [profileData, setProfileDataState] = useState<Profile>(() => {
     const saved = localStorage.getItem('profileData');
     return saved ? JSON.parse(saved) : DEFAULT_PROFILE_DATA;
   });
 
-  useEffect(() => {
-    localStorage.setItem('profileData', JSON.stringify(profileData));
-  }, [profileData]);
+  const setProfileData: Dispatch<SetStateAction<Profile>> = (
+    action
+  ) => {
+    setProfileDataState((prev) => {
+      const next =
+        typeof action === 'function'
+          ? (action as (p: Profile) => Profile)(prev)
+          : action;
+      localStorage.setItem('profileData', JSON.stringify(next));
+      return next;
+    });
+  };
 
   return (
     <AuthContext

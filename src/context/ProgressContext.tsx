@@ -1,11 +1,5 @@
 import { tuls } from '@/consts/tuls';
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  type ReactNode,
-} from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 
 export type TulStatus = 'not_started' | 'in_progress' | 'completed';
 
@@ -38,7 +32,7 @@ type ProgressProviderProps = {
 };
 
 export const ProgressProvider = ({ children }: ProgressProviderProps) => {
-  const [currentExam, setCurrentExam] = useState<string>(() => {
+  const [currentExam, setCurrentExamState] = useState<string>(() => {
     const saved = localStorage.getItem('currentBelt');
     return saved || 'gup-9';
   });
@@ -48,19 +42,17 @@ export const ProgressProvider = ({ children }: ProgressProviderProps) => {
     return saved ? JSON.parse(saved) : {};
   });
 
-  useEffect(() => {
-    localStorage.setItem('currentBelt', currentExam);
-  }, [currentExam]);
-
-  useEffect(() => {
-    localStorage.setItem('tulProgress', JSON.stringify(tulProgress));
-  }, [tulProgress]);
+  const setCurrentExam = (exam: string) => {
+    setCurrentExamState(exam);
+    localStorage.setItem('currentBelt', exam);
+  };
 
   const setTulStatus = (tulId: string, status: TulStatus) => {
-    setTulProgress((prev) => ({
-      ...prev,
-      [tulId]: status,
-    }));
+    setTulProgress((prev) => {
+      const next = { ...prev, [tulId]: status };
+      localStorage.setItem('tulProgress', JSON.stringify(next));
+      return next;
+    });
   };
 
   const getTulStatus = (tulId: string): TulStatus => {
