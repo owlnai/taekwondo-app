@@ -12,7 +12,7 @@ import {
 
 import { cn } from '@/utils/cn';
 import { Button, variantClass } from '@/common/Button';
-import { useEffect, useRef } from 'react';
+import { useCallback } from 'react';
 import { toTitleCase } from '@/utils/string';
 
 export function Calendar({
@@ -191,14 +191,31 @@ export function CalendarDayButton({
   ...props
 }: React.ComponentProps<typeof DayButton> & { locale?: Partial<Locale> }) {
   const defaultClassNames = getDefaultClassNames();
+  const { ref: refFromPicker, ...restProps } = props as typeof props & {
+    ref?: React.Ref<HTMLButtonElement | null>;
+  };
 
-  const ref = useRef<HTMLButtonElement>(null);
-  useEffect(() => {
-    if (modifiers.focused) ref.current?.focus();
-  }, [modifiers.focused]);
+  const setButtonRef = useCallback(
+    (node: HTMLButtonElement | null) => {
+      if (typeof refFromPicker === 'function') {
+        refFromPicker(node);
+      } else if (refFromPicker) {
+        (
+          refFromPicker as React.RefObject<HTMLButtonElement | null>
+        ).current = node;
+      }
+      if (node && modifiers.focused) {
+        requestAnimationFrame(() => {
+          node.focus();
+        });
+      }
+    },
+    [modifiers.focused, refFromPicker]
+  );
 
   return (
     <Button
+      ref={setButtonRef}
       variant="ghost"
       size="icon-sm"
       data-day={day.date.toLocaleDateString(locale?.code)}
@@ -216,7 +233,7 @@ export function CalendarDayButton({
         defaultClassNames.day,
         className
       )}
-      {...props}
+      {...restProps}
     />
   );
 }

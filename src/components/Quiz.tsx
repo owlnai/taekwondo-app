@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useMemo, useState } from 'react';
 import { ArrowLeft, Check, X, RotateCcw } from 'lucide-react';
 import type { VocabularyItem } from '@/consts/vocabulary';
 
@@ -13,47 +13,39 @@ type QuizQuestion = {
   correctAnswer: string;
 };
 
-export const Quiz = ({ items, onBack }: QuizProps) => {
-  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+function buildQuestionList(items: VocabularyItem[]): QuizQuestion[] {
+  const shuffled = [...items].sort(() => Math.random() - 0.5).slice(0, 10);
+  return shuffled.map((item) => {
+    const wrongAnswers = items
+      .filter((i) => i.spanish !== item.spanish)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 3)
+      .map((i) => i.spanish);
+
+    const options = [...wrongAnswers, item.spanish].sort(
+      () => Math.random() - 0.5
+    );
+
+    return {
+      question: item,
+      options,
+      correctAnswer: item.spanish,
+    };
+  });
+}
+
+type QuizRunProps = QuizProps & {
+  onReinitialize: () => void;
+};
+
+const QuizRun = ({ items, onBack, onReinitialize }: QuizRunProps) => {
+  const questions = useMemo(() => buildQuestionList(items), [items]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [isCorrect, setIsCorrect] = useState(false);
   const [answered, setAnswered] = useState(false);
-
-  const generateQuestions = useCallback(() => {
-    const shuffled = [...items].sort(() => Math.random() - 0.5).slice(0, 10);
-    const newQuestions: QuizQuestion[] = shuffled.map((item) => {
-      // Crear opciones incorrectas
-      const wrongAnswers = items
-        .filter((i) => i.spanish !== item.spanish)
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 3)
-        .map((i) => i.spanish);
-
-      const options = [...wrongAnswers, item.spanish].sort(
-        () => Math.random() - 0.5
-      );
-
-      return {
-        question: item,
-        options,
-        correctAnswer: item.spanish,
-      };
-    });
-
-    setQuestions(newQuestions);
-    setCurrentIndex(0);
-    setScore(0);
-    setShowResult(false);
-    setSelectedAnswer(null);
-    setAnswered(false);
-  }, [items]);
-
-  useEffect(() => {
-    generateQuestions();
-  }, [generateQuestions]);
 
   const handleAnswer = (answer: string) => {
     if (answered) return;
@@ -73,14 +65,14 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
       setCurrentIndex((prev) => prev + 1);
       setSelectedAnswer(null);
       setAnswered(false);
-      setIsCorrect(null);
+      setIsCorrect(false);
     } else {
       setShowResult(true);
     }
   };
 
   const handleRestart = () => {
-    generateQuestions();
+    onReinitialize();
   };
 
   if (questions.length === 0) {
@@ -225,5 +217,22 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
         Puntuación: {score} / {currentIndex + 1}
       </div>
     </section>
+  );
+};
+
+export const Quiz = ({ items, onBack }: QuizProps) => {
+  const [session, setSession] = useState(0);
+  const itemsKey = useMemo(
+    () => items.map((i) => `${i.korean}\0${i.spanish}`).join('|'),
+    [items]
+  );
+
+  return (
+    <QuizRun
+      key={`${itemsKey}__${session}`}
+      items={items}
+      onBack={onBack}
+      onReinitialize={() => setSession((s) => s + 1)}
+    />
   );
 };

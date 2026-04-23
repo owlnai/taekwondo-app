@@ -8,9 +8,10 @@ export function LoadingPage({
   return (
     <div
       className={cn(
-        'flex flex-col h-full items-center justify-center',
+        'flex flex-col h-dvh items-center justify-center',
         className
       )}
+      data-slot="loading-page"
       {...props}
     >
       <Spinner className="size-8" />
