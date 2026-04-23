@@ -1,7 +1,11 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useLocation } from '@tanstack/react-router';
 import { BookText, GraduationCap } from 'lucide-react';
 import TulesIcon from '@/assets/tules.svg?react';
 import { cn } from '@/utils/cn';
+
+function isNavItemActive(pathname: string, to: string) {
+  return pathname === to || pathname.startsWith(`${to}/`);
+}
 
 type NavItem = {
   to: string;
@@ -29,33 +33,47 @@ const navItems: NavItem[] = [
 ];
 
 export const BottomNav = () => {
+  const { pathname } = useLocation();
+  const found = navItems.findIndex((item) => isNavItemActive(pathname, item.to));
+  const activeIndex = found === -1 ? 0 : found;
+
   return (
     <nav
-      className="sticky bottom-0 inset-x-0 px-2 z-40 safe-area-bottom-2 landscape:hidden [view-transition-name:bottom-nav]"
+      className="sticky bottom-0 inset-x-0 px-4 z-40 safe-area-bottom-2 landscape:hidden [view-transition-name:bottom-nav]"
       aria-label="Navegación principal"
     >
-      <ul className="flex items-center h-16 max-w-2xl mx-auto gap-1 px-1 bg-primary-500 rounded-full font-medium text-sm leading-none">
-        {navItems.map((item) => (
-          <li key={item.to} className="flex-1">
-            <Link
-              to={item.to}
-              viewTransition={false}
-              activeOptions={{
-                includeHash: false,
-              }}
-              className={cn(
-                'flex flex-col items-center justify-center h-14 gap-1 rounded-full transition-colors duration-200 focus:outline-none text-white/65 [.active]:text-white [.active]:bg-white/10'
-              )}
-              aria-label={item.label}
-            >
-              <span className="flex items-center justify-center size-5">
-                {item.icon}
-              </span>
-              <span>{item.label}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <div className="relative h-16 max-w-2xl mx-auto rounded-full bg-primary-500">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute top-1 bottom-1 left-6 z-0 w-[calc((100%-3rem-0.5rem)/3)] rounded-full bg-white/10 transition-[transform] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none will-change-transform"
+          style={{
+            transform: `translate3d(calc(${activeIndex} * (100% + 0.25rem)),0,0)`,
+          }}
+        />
+        <ul className="relative z-10 flex items-center h-full gap-1 px-8 text-sm font-medium leading-none">
+          {navItems.map((item) => (
+            <li key={item.to} className="flex-1 min-w-0">
+              <Link
+                to={item.to}
+                activeOptions={{
+                  includeHash: false,
+                }}
+                className={cn(
+                  'flex flex-col items-center justify-center h-14 gap-1 rounded-full transition-colors duration-200 focus:outline-none',
+                  'text-white/65 [&.active]:text-white',
+                  'hover:text-white/90'
+                )}
+                aria-label={item.label}
+              >
+                <span className="flex items-center justify-center size-5">
+                  {item.icon}
+                </span>
+                <span>{item.label}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 };

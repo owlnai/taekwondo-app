@@ -70,19 +70,28 @@
    This keeps the header, bottom nav, and background completely
    inert — only main-content animates. */
 html:active-view-transition-type(slide-left),
-html:active-view-transition-type(slide-right) {
+html:active-view-transition-type(slide-right),
+html:active-view-transition-type(tab-next),
+html:active-view-transition-type(tab-prev) {
   &::view-transition-old(root),
   &::view-transition-new(root) {
     animation: none;
   }
 
+  /* main-content is clipped to the area above the bottom nav. Keep its group
+     below bottom-nav: animated layers + isolation can otherwise paint on top. */
   &::view-transition-group(main-content) {
+    z-index: 0;
     overflow: hidden;
+    /* Reserve space for h-16 nav + home indicator (layout mirrors MainLayout + BottomNav). */
     inset: 0 0 calc(4.5rem + 2 * env(safe-area-inset-bottom, 0px)) 0;
   }
 
-  /* Keep the bottom nav frozen in place — its group renders above main-content
-     in the stacking order (later in DOM), so it always paints on top. */
+  &::view-transition-group(bottom-nav) {
+    z-index: 10;
+  }
+
+  /* Keep the bottom nav frozen in place */
   &::view-transition-old(bottom-nav),
   &::view-transition-new(bottom-nav) {
     animation: none;
@@ -160,6 +169,59 @@ html:active-view-transition-type(slide-right) {
   to {
     transform: translateX(0);
     opacity: 1;
+  }
+}
+
+/* ---------- Tab bar (bottom nav): full directional slide like iOS push/pop ---------- */
+/* Next tab to the right: incoming from the right, outgoing recedes to the left. */
+html:active-view-transition-type(tab-next) {
+  &::view-transition-old(main-content) {
+    animation: 320ms cubic-bezier(0.32, 0.72, 0, 1) both tab-next-out;
+  }
+  &::view-transition-new(main-content) {
+    animation: 320ms cubic-bezier(0.32, 0.72, 0, 1) both tab-next-in;
+  }
+}
+@keyframes tab-next-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-28%);
+  }
+}
+@keyframes tab-next-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Previous tab to the left: incoming from the left, outgoing recedes to the right. */
+html:active-view-transition-type(tab-prev) {
+  &::view-transition-old(main-content) {
+    animation: 320ms cubic-bezier(0.32, 0.72, 0, 1) both tab-prev-out;
+  }
+  &::view-transition-new(main-content) {
+    animation: 320ms cubic-bezier(0.32, 0.72, 0, 1) both tab-prev-in;
+  }
+}
+@keyframes tab-prev-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(28%);
+  }
+}
+@keyframes tab-prev-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
   }
 }
 

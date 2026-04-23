@@ -5,7 +5,13 @@ import { ProgressProvider } from './context/ProgressContext';
 import { LoadingPage } from './components/LoadingPage';
 
 // Tab order for bottom nav - used to determine slide direction
-const TAB_ORDER = ['/tules', '/exams', '/theory'];
+const TAB_ORDER = ['/tules', '/exams', '/theory'] as const;
+
+function tabIndexForPathname(pathname: string): number {
+  return TAB_ORDER.findIndex(
+    (t) => pathname === t || pathname.startsWith(`${t}/`)
+  );
+}
 
 const router = createRouter({
   routeTree,
@@ -15,12 +21,11 @@ const router = createRouter({
     types: ({ fromLocation, toLocation }) => {
       if (!fromLocation) return [];
 
-      const fromTab = TAB_ORDER.findIndex((t) => fromLocation.pathname === t);
-      const toTab = TAB_ORDER.findIndex((t) => toLocation.pathname === t);
+      const fromTab = tabIndexForPathname(fromLocation.pathname);
+      const toTab = tabIndexForPathname(toLocation.pathname);
 
-      // Top-level tab switches should not use view transitions to avoid snapshot flicker.
       if (fromTab !== -1 && toTab !== -1 && fromTab !== toTab) {
-        return [];
+        return fromTab < toTab ? ['tab-next'] : ['tab-prev'];
       }
 
       // Otherwise use history stack index (handles back button, deep links, etc.)
