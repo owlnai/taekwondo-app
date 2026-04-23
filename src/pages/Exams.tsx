@@ -6,40 +6,38 @@ import { BeltIcon } from '@/components/BeltIcon';
 import { useProgress } from '@/context/ProgressContext';
 import { cn } from '@/utils/cn';
 import ExamLine from '@/assets/exam-line.svg?react';
+import { useEffect, useRef } from 'react';
 
 const PERIOD = 4;
 const AMPLITUDE = 2;
 
 export function Exams() {
+  const anchorElement = useRef<HTMLAnchorElement>(null);
   const { currentExam } = useProgress();
-  const examIndex = exams.findIndex((exam) => exam.id === currentExam);
-  const offset = examIndex == 0 ? 0 : examIndex == 1 ? 3 : 2;
-  const examSlice = Math.max(0, examIndex - 2);
+  const currentExamIndex = exams.findIndex((exam) => exam.id === currentExam);
+  const offset = (PERIOD - (currentExamIndex % PERIOD)) % PERIOD;
+
+  useEffect(() => {
+    if (anchorElement.current) {
+      anchorElement.current.scrollIntoView({ block: 'center' });
+    }
+  }, []);
 
   return (
-    <section className="flex flex-col gap-4 relative">
+    <section className="flex flex-col gap-4">
       <CurrentExam />
-      <div className="relative">
-        <div className="absolute left-0 top-8 bottom-8 ms-6 overflow-hidden">
-          <ExamLine
-            className={
-              examIndex == 0 ? '-mt-58' : examIndex == 1 ? '-mt-30' : ''
-            }
+      <div className="space-y-6">
+        {exams.map((exam, i) => (
+          <ExamCard
+            key={exam.id}
+            exam={exam}
+            currentIndex={currentExamIndex}
+            index={i}
+            isActive={i === currentExamIndex}
+            offset={offset}
+            ref={i === currentExamIndex ? anchorElement : undefined}
           />
-        </div>
-        <div className="space-y-6 relative">
-          {exams.slice(examSlice).map((exam, i) => {
-            const phase = (i + offset) % PERIOD;
-            const margin = AMPLITUDE - Math.abs(phase - AMPLITUDE);
-            return (
-              <ExamCard
-                key={exam.id}
-                exam={exam}
-                style={{ marginInlineStart: `${margin * 50}px` }}
-              />
-            );
-          })}
-        </div>
+        ))}
       </div>
     </section>
   );
@@ -68,22 +66,38 @@ function CurrentExam() {
 }
 
 function ExamCard({
+  className,
+  style,
   exam,
-  className: _className,
+  currentIndex,
+  index,
+  isActive,
+  offset,
   ...props
-}: React.ComponentProps<'a'> & { exam: Exam }) {
-  const { currentExam } = useProgress();
+}: React.ComponentProps<'a'> & {
+  exam: Exam;
+  currentIndex: number;
+  index: number;
+  isActive: boolean;
+  offset: number;
+}) {
   const belt = belts.find((belt) => belt.id === exam.belt);
-  const isActive = exam.id === currentExam;
+  const isLast = exams.length - 1 === index;
+  const phase = (index + offset) % PERIOD;
+  const margin = AMPLITUDE - Math.abs(phase - AMPLITUDE);
+  const flipLine = Math.floor(phase / AMPLITUDE) !== 1;
+  const isPending = currentIndex <= index;
 
   return (
     <Link
       to="/exams/$examId"
       params={{ examId: exam.id }}
       className={cn(
-        'flex items-center gap-3 py-3',
-        isActive && 'bg-white rounded-full shadow-[0_4px_0_#cdc9c9] px-5'
+        'flex items-center gap-3 py-3 relative',
+        isActive && 'bg-white rounded-full shadow-[0_4px_0_#cdc9c9] px-5',
+        className
       )}
+      style={{ marginInlineStart: `${margin * 50}px`, ...style }}
       {...props}
     >
       <div className="shrink-0 flex items-center justify-center size-16 border-2 border-primary-500 bg-white rounded-full shadow-[0_4px_0_var(--color-primary-500)]">
@@ -100,7 +114,19 @@ function ExamCard({
         </span>
         <h2 className="font-manrope font-black">Cinturón {belt?.label}</h2>
       </div>
-      {isActive && <ChevronRight color="#191919" size={28} />}
+      {isActive && (
+        <ChevronRight aria-label="Ir al examen" color="#191919" size={28} />
+      )}
+      {!isLast && (
+        <ExamLine
+          aria-hidden="true"
+          className={cn(
+            'absolute top-12 -left-6 text-primary-500 -z-1',
+            flipLine && '-scale-x-100 translate-x-full',
+            isPending && 'opacity-20'
+          )}
+        />
+      )}
     </Link>
   );
 }
