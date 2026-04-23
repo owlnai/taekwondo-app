@@ -200,9 +200,8 @@ export function CalendarDayButton({
       if (typeof refFromPicker === 'function') {
         refFromPicker(node);
       } else if (refFromPicker) {
-        (
-          refFromPicker as React.RefObject<HTMLButtonElement | null>
-        ).current = node;
+        (refFromPicker as React.RefObject<HTMLButtonElement | null>).current =
+          node;
       }
       if (node && modifiers.focused) {
         requestAnimationFrame(() => {

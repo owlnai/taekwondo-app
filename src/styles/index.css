@@ -26,7 +26,8 @@
     border-color: var(--color-border);
   }
 
-  html, body {
+  html,
+  body {
     overscroll-behavior: none;
   }
 
@@ -77,7 +78,14 @@ html:active-view-transition-type(slide-right) {
 
   &::view-transition-group(main-content) {
     overflow: hidden;
-    inset: 0 0 calc(4.5rem + env(safe-area-inset-bottom, 0px)) 0;
+    inset: 0 0 calc(4.5rem + 2 * env(safe-area-inset-bottom, 0px)) 0;
+  }
+
+  /* Keep the bottom nav frozen in place — its group renders above main-content
+     in the stacking order (later in DOM), so it always paints on top. */
+  &::view-transition-old(bottom-nav),
+  &::view-transition-new(bottom-nav) {
+    animation: none;
   }
 
   &::view-transition-image-pair(main-content) {

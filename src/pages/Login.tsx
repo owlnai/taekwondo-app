@@ -59,9 +59,12 @@ export const Login = ({ onLoginSuccess }: LoginProps) => {
               value={formData.email}
             />
           </label>
-          <label className="relative w-full">
-            <p className="sr-only">Contraseña</p>
+          <div className="relative w-full">
+            <label htmlFor="login-password" className="sr-only">
+              Contraseña
+            </label>
             <input
+              id="login-password"
               type={showPassword ? 'text' : 'password'}
               placeholder="Contraseña"
               className="flex items-center w-full h-12 px-4 pr-12 text-gray-900 border border-gray-300 rounded-md active:border-gray-400"
@@ -80,7 +83,7 @@ export const Login = ({ onLoginSuccess }: LoginProps) => {
             >
               {showPassword ? <Eye size={16} /> : <EyeOff size={16} />}
             </button>
-          </label>
+          </div>
           <Button onClick={signIn} type="submit" disabled={!isFormValid}>
             Iniciar sesión
           </Button>

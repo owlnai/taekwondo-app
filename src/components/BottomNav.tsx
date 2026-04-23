@@ -31,7 +31,7 @@ const navItems: NavItem[] = [
 export const BottomNav = () => {
   return (
     <nav
-      className="sticky bottom-0 inset-x-0 px-2 z-40 safe-area-bottom-2 landscape:hidden"
+      className="sticky bottom-0 inset-x-0 px-2 z-40 safe-area-bottom-2 landscape:hidden [view-transition-name:bottom-nav]"
       aria-label="Navegación principal"
     >
       <ul className="flex items-center h-16 max-w-2xl mx-auto gap-1 px-1 bg-primary-500 rounded-full font-medium text-sm leading-none">

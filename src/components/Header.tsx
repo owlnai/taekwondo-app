@@ -67,7 +67,7 @@ export function Header() {
         >
           <Calendar width={20} height={20} />
         </Link>
-        <Link to="/account">
+        <Link to="/account" aria-label="Perfil">
           <ProfileAvatar className="size-10" />
         </Link>
       </div>
