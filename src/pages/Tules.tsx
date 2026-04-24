@@ -89,7 +89,7 @@ const TulCard = ({ tul }: { tul: Tul }) => {
     >
       <div className="relative">
         <img
-          src="/imgs/Rectangle.png"
+          src="/imgs/rectangle.webp"
           alt="Tul"
           className="w-full object-cover aspect-4/3"
         />
