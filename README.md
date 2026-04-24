@@ -4,7 +4,7 @@
 
 ## Screenshots
 
-### SOON....
+### SOON...
 
 ---
 
@@ -26,7 +26,7 @@
 
 Make sure you have the following installed on your system:
 
-- **Node.js** (v16 or later)
+- **Node.js** (v20 LTS)
 - **npm**
 
 ---
@@ -115,6 +115,12 @@ For a better development experience, consider installing:
 - GitLens
 - Auto Import
 - Auto Complete Tag
+
+---
+
+**Thanks to all the contributors who have made this project possible!**
+
+[![Contributors](https://contrib.rocks/image?repo=Tekwondo-RAM/taekwondo-app)](https://github.com/Tekwondo-RAM/taekwondo-app/graphs/contributors)
 
 ---
 

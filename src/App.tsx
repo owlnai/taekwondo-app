@@ -1,64 +1,66 @@
-import { useState, useEffect } from 'react';
-import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Exams } from './pages/Exams';
-import { Login } from './pages/Login';
-import { Tules } from './pages/Tules';
-import { Theory } from './pages/Theory';
-import { Account } from './pages/Account';
-import { MainLayout } from './pages/MainLayout';
-import { InstallPWA } from './components/InstallPWA';
-import { TulManagement } from './pages/TulManagement';
-import { TulVideo } from './pages/TulVideo';
-import { ExamDetail } from './pages/ExamDetail';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { routeTree } from './routeTree.gen';
+import { AuthProvider } from './context/AuthContext';
 import { ProgressProvider } from './context/ProgressContext';
+import { LoadingPage } from './components/LoadingPage';
+
+
+const SCREEN_ORDER = [
+  '/calendar',
+  '/tules',
+  '/exams',
+  '/theory',
+  '/account',
+] as const;
+
+function screenIndexForPathname(pathname: string): number {
+  return SCREEN_ORDER.findIndex(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
+  );
+}
+
+const router = createRouter({
+  routeTree,
+  scrollRestoration: true,
+  defaultPendingComponent: LoadingPage,
+  defaultViewTransition: {
+    types: ({ fromLocation, toLocation }) => {
+      if (!fromLocation) return [];
+
+      const fromScreen = screenIndexForPathname(fromLocation.pathname);
+      const toScreen = screenIndexForPathname(toLocation.pathname);
+
+      if (fromScreen !== -1 && toScreen !== -1 && fromScreen !== toScreen) {
+        return fromScreen < toScreen ? ['tab-next'] : ['tab-prev'];
+      }
+
+      const fromIndex = fromLocation.state.__TSR_index;
+      const toIndex = toLocation.state.__TSR_index;
+
+      if (fromIndex === toIndex) return [];
+      return fromIndex > toIndex ? ['slide-right'] : ['slide-left'];
+    },
+  },
+});
+
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 function App() {
-  const [isLogged, setIsLogged] = useState(() => {
-    const saved = localStorage.getItem('isLogged');
-    return saved === 'true';
-  });
-
-  useEffect(() => {
-    localStorage.setItem('isLogged', isLogged.toString());
-  }, [isLogged]);
-
-  const handleLoginSuccess = () => {
-    setIsLogged(true);
-  };
-
   const handleLogout = () => {
-    setIsLogged(false);
     localStorage.removeItem('isLogged');
+    router.navigate({ to: '/login' });
   };
-
-  const appContent = isLogged ? (
-    <ProgressProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<MainLayout onLogout={handleLogout} />}>
-            <Route path="/" element={<Exams />} />
-            <Route path="/exam/:examId" element={<ExamDetail />} />
-            <Route path="/tules">
-              <Route index element={<Tules />} />
-              <Route path=":tulId" element={<TulManagement />} />
-              <Route path=":tulId/video" element={<TulVideo />} />
-             </Route>
-            <Route path="/theory" element={<Theory />} />
-            <Route path="/account" element={<Account />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </ProgressProvider>
-  ) : (
-    <Login onLoginSuccess={handleLoginSuccess} />
-  );
 
   return (
-    <>
-      <InstallPWA />
-      {appContent}
-    </>
+    <AuthProvider onLogout={handleLogout}>
+      <ProgressProvider>
+        <RouterProvider router={router} />
+      </ProgressProvider>
+    </AuthProvider>
   );
 }
 
