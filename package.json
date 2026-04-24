@@ -49,5 +49,6 @@
     "vite-plugin-pwa": {
       "vite": "$vite"
     }
-  }
+  },
+  "packageManager": "pnpm@10.33.2"
 }
