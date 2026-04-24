@@ -3,7 +3,10 @@ import { test, expect } from '@playwright/test';
 test('tules page shows grid of tul cards', async ({ page }) => {
   await page.goto('/tules');
 
-  await expect(page.getByText('Selecciona tu tul')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Formas' })).toBeVisible();
+  await expect(
+    page.getByPlaceholder(/Buscar por nombre|movimientos/i)
+  ).toBeVisible();
 
   // Should have multiple tul cards visible
   const tulCards = page.getByRole('link').filter({ hasText: /movimientos/i });

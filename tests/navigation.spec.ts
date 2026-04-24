@@ -8,7 +8,10 @@ test('bottom nav switches between the three main tabs', async ({ page }) => {
 
   // Switch to Formas tab
   await page.getByRole('link', { name: 'Formas' }).click();
-  await expect(page.getByText('Selecciona tu tul')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Formas' })).toBeVisible();
+  await expect(
+    page.getByPlaceholder(/Buscar por nombre|movimientos/i)
+  ).toBeVisible();
 
   // Switch to Teoría tab
   await page.getByRole('link', { name: 'Teoría' }).click();
