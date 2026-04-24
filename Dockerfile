@@ -2,7 +2,7 @@ FROM node:23-bookworm-slim AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY pnpm-*.json ./
 
 RUN npm ci && npm cache clean --force
 
