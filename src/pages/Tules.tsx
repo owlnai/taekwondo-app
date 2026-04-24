@@ -25,9 +25,7 @@ export const Tules = () => {
   return (
     <section className="flex flex-col gap-4 pt-4">
       <div className="flex flex-col gap-2">
-        <h1 className="text-xl">Selecciona tu tul</h1>
-
-        {/* Buscador */}
+        
         <div className="relative">
           <Search
             width={16}
@@ -36,10 +34,10 @@ export const Tules = () => {
           />
           <input
             type="text"
-            placeholder="Buscar por nombre, coreano, movimientos..."
+            placeholder="Buscar por nombre, movimientos..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-12 pr-10 text-gray-900 bg-white border border-gray-300 rounded-lg pl-9 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="box-border w-full h-12 min-w-0 pr-10 text-gray-900 bg-white border-2 border-gray-300 border-solid rounded-lg outline-none pl-9 focus:border-primary-500"
           />
           {searchQuery && (
             <button
@@ -53,7 +51,6 @@ export const Tules = () => {
           )}
         </div>
 
-        {/* Contador de resultados */}
         {searchQuery && (
           <p className="text-sm text-gray-500">
             {filteredTuls.length}{' '}
@@ -62,7 +59,6 @@ export const Tules = () => {
         )}
       </div>
 
-      {/* Lista de tules */}
       {filteredTuls.length > 0 ? (
         <article className="grid grid-cols-2 gap-3">
           {filteredTuls.map((tul) => (
@@ -95,7 +91,7 @@ const TulCard = ({ tul }: { tul: Tul }) => {
         <img
           src="/imgs/Rectangle.png"
           alt="Tul"
-          className="w-full aspect-4/3 object-cover"
+          className="object-cover w-full aspect-4/3"
         />
         {tul.isPreTul && (
           <span className="absolute px-2 py-0.5 text-xs font-medium text-white rounded bg-amber-500 top-2 right-2">

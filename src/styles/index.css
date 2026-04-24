@@ -3,6 +3,8 @@
 @import './fonts.css';
 
 :root {
+  --vt-tab-ease: cubic-bezier(0.28, 0.7, 0, 0.99);
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -173,55 +175,77 @@ html:active-view-transition-type(slide-right) {
 }
 
 /* ---------- Tab bar (bottom nav): full directional slide like iOS push/pop ---------- */
-/* Next tab to the right: incoming from the right, outgoing recedes to the left. */
 html:active-view-transition-type(tab-next) {
   &::view-transition-old(main-content) {
-    animation: 320ms cubic-bezier(0.32, 0.72, 0, 1) both tab-next-out;
+    animation: 380ms var(--vt-tab-ease) both tab-next-out;
   }
   &::view-transition-new(main-content) {
-    animation: 320ms cubic-bezier(0.32, 0.72, 0, 1) both tab-next-in;
+    animation: 380ms var(--vt-tab-ease) both tab-next-in;
   }
 }
 @keyframes tab-next-out {
   from {
     transform: translateX(0);
+    opacity: 1;
   }
   to {
-    transform: translateX(-28%);
+    transform: translateX(-26%);
+    opacity: 0.97;
   }
 }
 @keyframes tab-next-in {
   from {
     transform: translateX(100%);
+    opacity: 1;
   }
   to {
     transform: translateX(0);
+    opacity: 1;
   }
 }
 
 /* Previous tab to the left: incoming from the left, outgoing recedes to the right. */
 html:active-view-transition-type(tab-prev) {
   &::view-transition-old(main-content) {
-    animation: 320ms cubic-bezier(0.32, 0.72, 0, 1) both tab-prev-out;
+    animation: 380ms var(--vt-tab-ease) both tab-prev-out;
   }
   &::view-transition-new(main-content) {
-    animation: 320ms cubic-bezier(0.32, 0.72, 0, 1) both tab-prev-in;
+    animation: 380ms var(--vt-tab-ease) both tab-prev-in;
   }
 }
 @keyframes tab-prev-out {
   from {
     transform: translateX(0);
+    opacity: 1;
   }
   to {
-    transform: translateX(28%);
+    transform: translateX(26%);
+    opacity: 0.97;
   }
 }
 @keyframes tab-prev-in {
   from {
     transform: translateX(-100%);
+    opacity: 1;
   }
   to {
     transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:active-view-transition-type(tab-next) {
+    &::view-transition-old(main-content),
+    &::view-transition-new(main-content) {
+      animation-duration: 200ms;
+    }
+  }
+  html:active-view-transition-type(tab-prev) {
+    &::view-transition-old(main-content),
+    &::view-transition-new(main-content) {
+      animation-duration: 200ms;
+    }
   }
 }
 

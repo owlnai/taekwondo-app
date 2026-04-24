@@ -4,12 +4,18 @@ import { AuthProvider } from './context/AuthContext';
 import { ProgressProvider } from './context/ProgressContext';
 import { LoadingPage } from './components/LoadingPage';
 
-// Tab order for bottom nav - used to determine slide direction
-const TAB_ORDER = ['/tules', '/exams', '/theory'] as const;
 
-function tabIndexForPathname(pathname: string): number {
-  return TAB_ORDER.findIndex(
-    (t) => pathname === t || pathname.startsWith(`${t}/`)
+const SCREEN_ORDER = [
+  '/calendar',
+  '/tules',
+  '/exams',
+  '/theory',
+  '/account',
+] as const;
+
+function screenIndexForPathname(pathname: string): number {
+  return SCREEN_ORDER.findIndex(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
   );
 }
 
@@ -21,14 +27,13 @@ const router = createRouter({
     types: ({ fromLocation, toLocation }) => {
       if (!fromLocation) return [];
 
-      const fromTab = tabIndexForPathname(fromLocation.pathname);
-      const toTab = tabIndexForPathname(toLocation.pathname);
+      const fromScreen = screenIndexForPathname(fromLocation.pathname);
+      const toScreen = screenIndexForPathname(toLocation.pathname);
 
-      if (fromTab !== -1 && toTab !== -1 && fromTab !== toTab) {
-        return fromTab < toTab ? ['tab-next'] : ['tab-prev'];
+      if (fromScreen !== -1 && toScreen !== -1 && fromScreen !== toScreen) {
+        return fromScreen < toScreen ? ['tab-next'] : ['tab-prev'];
       }
 
-      // Otherwise use history stack index (handles back button, deep links, etc.)
       const fromIndex = fromLocation.state.__TSR_index;
       const toIndex = toLocation.state.__TSR_index;
 

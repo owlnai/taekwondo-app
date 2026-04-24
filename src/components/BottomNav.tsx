@@ -34,8 +34,8 @@ const navItems: NavItem[] = [
 
 export const BottomNav = () => {
   const { pathname } = useLocation();
-  const found = navItems.findIndex((item) => isNavItemActive(pathname, item.to));
-  const activeIndex = found === -1 ? 0 : found;
+  const activeIndex = navItems.findIndex((item) => isNavItemActive(pathname, item.to));
+  const hasActiveTab = activeIndex !== -1;
 
   return (
     <nav
@@ -45,9 +45,12 @@ export const BottomNav = () => {
       <div className="relative h-16 max-w-2xl mx-auto rounded-full bg-primary-500">
         <div
           aria-hidden
-          className="pointer-events-none absolute top-1 bottom-1 left-6 z-0 w-[calc((100%-3rem-0.5rem)/3)] rounded-full bg-white/10 transition-[transform] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none will-change-transform"
+          className={cn(
+            'pointer-events-none absolute top-1 bottom-1 left-6 z-0 w-[calc((100%-3rem-0.5rem)/3)] rounded-full bg-white/10 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none will-change-transform',
+            !hasActiveTab && 'opacity-0'
+          )}
           style={{
-            transform: `translate3d(calc(${activeIndex} * (100% + 0.25rem)),0,0)`,
+            transform: `translate3d(calc(${hasActiveTab ? activeIndex : 0} * (100% + 0.25rem)),0,0)`,
           }}
         />
         <ul className="relative z-10 flex items-center h-full gap-1 px-8 text-sm font-medium leading-none">

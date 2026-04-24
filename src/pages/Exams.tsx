@@ -95,6 +95,8 @@ function ExamCard({
       className={cn(
         'flex items-center gap-3 py-3 relative',
         isActive && 'bg-white rounded-full shadow-[0_4px_0_#cdc9c9] px-5',
+        !isActive &&
+          'rounded-xl px-2 -mx-2 transition-colors duration-100 active:bg-slate-100',
         className
       )}
       style={{ marginInlineStart: `${margin * 50}px`, ...style }}
