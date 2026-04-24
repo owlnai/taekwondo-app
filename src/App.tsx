@@ -56,11 +56,15 @@ function App() {
   };
 
   return (
-    <AuthProvider onLogout={handleLogout}>
-      <ProgressProvider>
-        <RouterProvider router={router} />
-      </ProgressProvider>
-    </AuthProvider>
+    <div className="flex h-full min-h-0 w-full min-w-0 flex-1 flex-col">
+      <AuthProvider onLogout={handleLogout}>
+        <ProgressProvider>
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+            <RouterProvider router={router} />
+          </div>
+        </ProgressProvider>
+      </AuthProvider>
+    </div>
   );
 }
 
