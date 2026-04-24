@@ -24,7 +24,7 @@ export function Exams() {
   }, []);
 
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4 pt-4">
       <CurrentExam />
       <div className="space-y-6">
         {exams.map((exam, i) => (
